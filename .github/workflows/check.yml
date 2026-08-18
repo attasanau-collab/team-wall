@@ -1,0 +1,35 @@
+# ด่านตรวจก่อน merge — "CI is a gate, not a debugger"
+name: PR Check
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # ด่าน 1: ห้ามแก้ไฟล์กลาง
+      - name: ตรวจว่าไม่ได้แก้ไฟล์กลาง
+        run: |
+          CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD)
+          echo "ไฟล์ที่แก้:"; echo "$CHANGED"
+          if echo "$CHANGED" | grep -E '^(index\.html|css/base\.css|js/render\.js)$'; then
+            echo "::error::แก้ไฟล์กลางไม่ได้ กรุณา revert ไฟล์เหล่านั้น"
+            exit 1
+          fi
+
+      # ด่าน 2: JavaScript ต้อง parse ได้ (กันไฟล์พังทั้งเว็บ)
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: ตรวจ syntax ของไฟล์ JS ทุกไฟล์
+        run: |
+          for f in $(find js data -name '*.js'); do
+            node --input-type=module --check < "$f" || { echo "::error file=$f::syntax error"; exit 1; }
+          done

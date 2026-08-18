@@ -1,0 +1,8 @@
+# บังคับ line ending เป็น LF ทุกไฟล์ข้อความ
+# ถ้าไม่ตั้งค่านี้ นักศึกษาที่ใช้ Windows จะ commit ไฟล์เป็น CRLF
+# ทำให้ Git มองว่า "ทุกบรรทัดถูกแก้" -> conflict ทั้งไฟล์
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.ico binary

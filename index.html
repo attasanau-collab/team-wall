@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Wall — วิศวกรรมคอมพิวเตอร์</title>
+
+  <!-- แยก CSS ออกจาก HTML ตามหลัก Separation of Concerns (Workshop 00) -->
+  <link rel="stylesheet" href="./css/theme.css" />
+  <link rel="stylesheet" href="./css/base.css" />
+</head>
+<body>
+  <header class="wall-header">
+    <h1 id="wall-title">Team Wall</h1>
+    <p class="wall-subtitle">การ์ดแนะนำตัวของทุกคน — สร้างด้วย Git ร่วมกัน</p>
+    <p class="wall-count">สมาชิกบนกำแพง: <span id="member-count">0</span> คน</p>
+  </header>
+
+  <!-- JS จะ render การ์ดทั้งหมดลงใน container นี้ -->
+  <main id="wall" class="wall"></main>
+
+  <footer class="wall-footer">
+    <p>สร้างโดยนักศึกษาวิศวกรรมคอมพิวเตอร์ — deploy อัตโนมัติด้วย GitHub Pages</p>
+  </footer>
+
+  <!-- type="module" จำเป็นสำหรับ import/export (ES Modules) -->
+  <script type="module" src="./js/render.js"></script>
+</body>
+</html>
